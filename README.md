@@ -38,17 +38,17 @@ processing-framework/
 ## Quick start (local Python)
 Create virtual environment and install dependencies:
 
-bash
-Copy code
+```
 python -m venv .venv
 source .venv/bin/activate   # On Linux/Mac
 .\.venv\Scripts\Activate.ps1  # On Windows PowerShell
 pip install -r requirements.txt
+```
 Run pipeline:
 
-bash
-Copy code
+```
 python src/main.py
+```
 Results:
 
 Valid records: data/output/ok/ (JSON files)
@@ -60,20 +60,19 @@ Report: data/output/report.json
 ## Run with Docker
 Build image:
 
-bash
-Copy code
+```
 docker build -t processing-framework .
+```
 Run container (mount data folder to keep outputs):
-
-bash
-Copy code
+```
 docker run --rm -v $(pwd)/data:/app/data processing-framework
-Run with Airflow (optional)
+```
+## Run with Airflow (optional)
 Start services:
 
-bash
-Copy code
+```
 docker-compose up
+```
 Open Airflow UI: http://localhost:8080
 
 Trigger DAG: ominimo_pipeline
