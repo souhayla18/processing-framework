@@ -11,7 +11,7 @@ venv/
 .ipynb_checkpoints
 
 # Data outputs
-data/output/
+#data/output/
 *.log
 
 # Docker
