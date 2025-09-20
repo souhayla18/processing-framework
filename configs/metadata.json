@@ -1,26 +1,35 @@
 {
-    "dataflows": [
-      {
-        "name": "motor-ingestion",
-        "sources": [
-          {
-            "name": "policy_inputs",
-            "path": "data/input/motor_policy.json",
-            "format": "json"
-          }
-        ],
-        "validations": {
-          "driver_age": {"type": "int", "min": 18, "max": 100, "required": true},
-          "plate_number": {"type": "string", "not_empty": true, "required": true}
-        },
-        "transformations": {
-          "add_ingestion_dt": true
-        },
-        "sinks": {
-          "ok": "data/output/ok/",
-          "ko": "data/output/ko/"
+  "dataflows": [
+    {
+      "name": "motor-ingestion",
+      "sources": [
+        {
+          "name": "policy_inputs",
+          "path": "data/input/motor_policy.json",
+          "format": "json"
         }
+      ],
+      "validations": [
+        {"field": "driver_age", "rule": "required"},
+        {"field": "driver_age", "rule": "type", "type": "int"},
+        {"field": "driver_age", "rule": "between", "min": 18, "max": 100},
+        {"field": "plate_number", "rule": "required"},
+        {"field": "plate_number", "rule": "not_empty"},
+        {"field": "plate_number", "rule": "regex", "pattern": "^[A-Z0-9-]+$"}
+      ],
+      "transformations": {
+        "add_ingestion_dt": true,
+        "standardize_plate": true,
+        "add_age_bucket": true,
+        "add_ingestion_id": true,
+        "add_lineage": true,
+        "track_record_status": true
+      },
+      "sinks": {
+        "ok": "data/output/ok/",
+        "ko": "data/output/ko/",
+        "report": "data/output/report.json"
       }
-    ]
-  }
-  
+    }
+  ]
+}

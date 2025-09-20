@@ -1,0 +1,18 @@
+# Byte-compiled / cache
+__pycache__/
+*.pyc
+
+# Virtual envs
+.env
+venv/
+.envrc
+
+# Python / Jupyter
+.ipynb_checkpoints
+
+# Data outputs
+data/output/
+*.log
+
+# Docker
+*.tar
