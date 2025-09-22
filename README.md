@@ -16,7 +16,7 @@ processing-framework/
 ├── configs/
 │   └── metadata.json
 ├── dags/
-│   └── ominimo_pipeline_dag.py
+│   └── pipeline_dag.py
 ├── data/
 │   ├── input/
 │   │   └── motor_policy.json
@@ -75,7 +75,7 @@ docker-compose up
 ```
 Open Airflow UI: http://localhost:8080
 
-Trigger DAG: ominimo_pipeline
+Trigger DAG: ipeline
 
 ## How to extend
 Add rules to configs/metadata.json under validations
