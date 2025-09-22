@@ -30,7 +30,6 @@ def main(config_path="configs/metadata.json"):
         logger.info("Applying transformations...")
         valid_df, invalid_df = apply_transformations(valid_df, invalid_df, flow.get("transformations", {}))
 
-        # ensure output directories exist on host (for local runs, ensure path exist)
         ok_path = flow["sinks"]["ok"]
         ko_path = flow["sinks"]["ko"]
         os.makedirs(ok_path, exist_ok=True)

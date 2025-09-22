@@ -22,8 +22,7 @@
         "standardize_plate": true,
         "add_age_bucket": true,
         "add_ingestion_id": true,
-        "add_lineage": true,
-        "track_record_status": true
+        "add_lineage": true
       },
       "sinks": {
         "ok": "data/output/ok/",

@@ -40,14 +40,6 @@ def _add_ingestion_id(df: DataFrame, id_col: str = "ingestion_id",
         )
     return df
 
-def _add_record_status(df: DataFrame, errors_col: str = "validation_errors",
-                       status_col: str = "record_status") -> DataFrame:
-    # set VALID if errors map is null or empty
-    return df.withColumn(
-        status_col,
-        when((col(errors_col).isNull()) | (size(map_keys(col(errors_col))) == 0), lit("VALID")).otherwise(lit("INVALID"))
-    )
-
 def apply_transformations(valid_df: DataFrame, invalid_df: DataFrame,
                           transformations: dict):
     # generate single ingestion timestamp for the run
@@ -57,28 +49,19 @@ def apply_transformations(valid_df: DataFrame, invalid_df: DataFrame,
         valid_df = valid_df.withColumn("ingestion_dt", lit(ingestion_ts))
         invalid_df = invalid_df.withColumn("ingestion_dt", lit(ingestion_ts))
 
-    if transformations.get("standardize_plate", False):
-        valid_df = _standardize_plate(valid_df)
-        invalid_df = _standardize_plate(invalid_df)
-
     if transformations.get("add_lineage", False):
         valid_df = _add_lineage(valid_df)
         invalid_df = _add_lineage(invalid_df)
 
-    # validator already created validation_errors; do not re-aggregate here
     if transformations.get("add_ingestion_id", False):
         valid_df = _add_ingestion_id(valid_df)
         invalid_df = _add_ingestion_id(invalid_df)
+    
+    if transformations.get("standardize_plate", False):
+        valid_df = _standardize_plate(valid_df)
+
 
     if transformations.get("add_age_bucket", False):
         valid_df = _add_age_bucket(valid_df)
-        invalid_df = _add_age_bucket(invalid_df)
-
-    if transformations.get("track_record_status", False):
-        # ensure validation_errors exists on valid_df (may be null)
-        if "validation_errors" not in valid_df.columns:
-            valid_df = valid_df.withColumn("validation_errors", lit(None))
-        valid_df = _add_record_status(valid_df)
-        invalid_df = _add_record_status(invalid_df)
 
     return valid_df, invalid_df
