@@ -18,12 +18,12 @@ default_args = {
 }
 
 with DAG(
-    dag_id="ominimo_pipeline",
+    dag_id="pipeline",
     default_args=default_args,
     start_date=datetime(2025, 1, 1),
     schedule_interval=None,
     catchup=False,
-    tags=["ominimo","pipelines"]
+    tags=["pipelines"]
 ) as dag:
 
     wait_for_input = FileSensor(
