@@ -1,0 +1,15 @@
+{"policy_number":"11111","driver_age":18,"plate_number":"NEW-456"}
+{"policy_number":"22222","driver_age":16,"plate_number":"OLD-999"}
+{"policy_number":"33333","driver_age":40,"plate_number":""}
+{"policy_number":"44444","driver_age":50,"plate_number":"VALID-12"}
+{"policy_number":"55555","driver_age":28}
+
+activate venv : .\.venv\Scripts\Activate.ps1   
+
+python src/main.py
+
+
+create new venv for airflow 
+py -3.12 -m venv .venv
+.\.venv\Scripts\activate
+pip install apache-airflow==2.11.2
